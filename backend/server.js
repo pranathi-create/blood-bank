@@ -27,6 +27,10 @@ app.post("/donors", (req, res) => {
     res.json({ message: "Donor added successfully" });
 });
 
+app.get("/requests", (req, res) => {
+  const data = fs.readFileSync("data/requests.json");
+  res.json(JSON.parse(data));
+});
 app.post("/requests", (req, res) => {
     const data = fs.readFileSync("data/requests.json");
     const requests = JSON.parse(data);
