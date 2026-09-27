@@ -1,109 +1,92 @@
 const express = require("express");
 const fs = require("fs");
-const path = require("path");
-const cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
-app.use(cors());
+
+// Allow frontend to connect
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    next();
+});
 
 
-// ---------- HOME ----------
+// HOME
 app.get("/", (req, res) => {
-    res.send("Blood Bank Backend is Running!");
+    res.send("Life Savers Blood Bank Server is Running!");
 });
 
 
-// ---------- BLOOD AVAILABILITY ----------
+// BLOOD AVAILABILITY
 app.get("/blood", (req, res) => {
-    const file = path.join(__dirname, "data", "blood.json");
-
-    const data = fs.readFileSync(file, "utf8");
-
-    res.json(JSON.parse(data));
+    res.json([
+        { bloodGroup: "A+", units: 10 },
+        { bloodGroup: "A-", units: 5 },
+        { bloodGroup: "B+", units: 8 },
+        { bloodGroup: "B-", units: 3 },
+        { bloodGroup: "AB+", units: 6 },
+        { bloodGroup: "AB-", units: 2 },
+        { bloodGroup: "O+", units: 12 },
+        { bloodGroup: "O-", units: 4 }
+    ]);
 });
 
 
-// ---------- GET DONORS ----------
-app.get("/donors", (req, res) => {
-    const file = path.join(__dirname, "data", "donors.json");
-
-    const data = fs.readFileSync(file, "utf8");
-
-    res.json(JSON.parse(data));
-});
-
-
-// ---------- ADD DONOR ----------
+// DONORS
 app.post("/donors", (req, res) => {
-    const file = path.join(__dirname, "data", "donors.json");
 
-    const data = fs.readFileSync(file, "utf8");
-
-    const donors = JSON.parse(data);
-
-    donors.push(req.body);
-
-    fs.writeFileSync(
-        file,
-        JSON.stringify(donors, null, 2)
-    );
+    console.log("Donor received:", req.body);
 
     res.json({
-        message: "Successfully Registered!"
+        success: true,
+        message: "Donor registered successfully"
     });
+
 });
 
 
-// ---------- GET BLOOD REQUESTS ----------
-app.get("/requests", (req, res) => {
-    const file = path.join(__dirname, "data", "requests.json");
-
-    const data = fs.readFileSync(file, "utf8");
-
-    res.json(JSON.parse(data));
+// GET DONORS
+app.get("/donors", (req, res) => {
+    res.json([]);
 });
 
 
-// ---------- ADD BLOOD REQUEST ----------
+// BLOOD REQUEST
 app.post("/requests", (req, res) => {
-    const file = path.join(__dirname, "data", "requests.json");
 
-    const data = fs.readFileSync(file, "utf8");
-
-    const requests = JSON.parse(data);
-
-    requests.push(req.body);
-
-    fs.writeFileSync(
-        file,
-        JSON.stringify(requests, null, 2)
-    );
+    console.log("Blood request:", req.body);
 
     res.json({
-        message: "Blood Request added successfully!"
+        success: true,
+        message: "Blood request submitted successfully"
     });
+
 });
 
 
-// ---------- CONTACT ----------
+// GET REQUESTS
+app.get("/requests", (req, res) => {
+    res.json([]);
+});
+
+
+// CONTACT
 app.post("/contact", (req, res) => {
-    const file = path.join(__dirname, "data", "contacts.json");
 
-    const data = fs.readFileSync(file, "utf8");
+    console.log("Contact:", req.body);
 
-    const contacts = JSON.parse(data);
+    res.json({
+        success: true,
+        message: "Message sent successfully"
+    });
 
-    contacts.push(req.body);
-
-    fs.writeFileSync(
-    file,
-    JSON.stringify(contacts, null, 2)
-);
-
-res.json({
-    message: "Message sent successfully!"
 });
 
+
+// START SERVER
+app.listen(3000, () => {
+    console.log("Server running on http://localhost:3000");
 });

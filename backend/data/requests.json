@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "name": "Test",
+    "bloodGroup": "O+",
+    "phone": "9999999999",
+    "hospital": "Test Hospital"
+  },
+  {
+    "name": "Pranathi",
+    "bloodGroup": "AB+",
+    "phone": "8971143570",
+    "hospital": "Vydehi"
+  }
+]
