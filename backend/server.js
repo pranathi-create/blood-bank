@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const path = require("path");
 const cors = require("cors");
 
 const app = express();
@@ -7,56 +8,102 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
+// ---------- HOME ----------
 app.get("/", (req, res) => {
     res.send("Blood Bank Backend is Running!");
 });
 
+
+// ---------- BLOOD AVAILABILITY ----------
 app.get("/blood", (req, res) => {
-    const data = fs.readFileSync("data/blood.json");
+    const file = path.join(__dirname, "data", "blood.json");
+
+    const data = fs.readFileSync(file, "utf8");
+
     res.json(JSON.parse(data));
 });
 
+
+// ---------- GET DONORS ----------
+app.get("/donors", (req, res) => {
+    const file = path.join(__dirname, "data", "donors.json");
+
+    const data = fs.readFileSync(file, "utf8");
+
+    res.json(JSON.parse(data));
+});
+
+
+// ---------- ADD DONOR ----------
 app.post("/donors", (req, res) => {
-    const data = fs.readFileSync("data/donors.json");
+    const file = path.join(__dirname, "data", "donors.json");
+
+    const data = fs.readFileSync(file, "utf8");
+
     const donors = JSON.parse(data);
 
     donors.push(req.body);
 
-    fs.writeFileSync("data/donors.json", JSON.stringify(donors, null, 2));
+    fs.writeFileSync(
+        file,
+        JSON.stringify(donors, null, 2)
+    );
 
-    res.json({ message: "Donor added successfully" });
+    res.json({
+        message: "Successfully Registered!"
+    });
 });
 
+
+// ---------- GET BLOOD REQUESTS ----------
 app.get("/requests", (req, res) => {
-  const data = fs.readFileSync("data/requests.json");
-  res.json(JSON.parse(data));
+    const file = path.join(__dirname, "data", "requests.json");
+
+    const data = fs.readFileSync(file, "utf8");
+
+    res.json(JSON.parse(data));
 });
+
+
+// ---------- ADD BLOOD REQUEST ----------
 app.post("/requests", (req, res) => {
-  const requests = require("./data/requests.json");
+    const file = path.join(__dirname, "data", "requests.json");
 
-  requests.push(req.body);
+    const data = fs.readFileSync(file, "utf8");
 
-  fs.writeFileSync(
-    "./data/requests.json",
-    JSON.stringify(requests, null, 2)
-  );
+    const requests = JSON.parse(data);
 
-  res.json({ message: "Blood Request added successfully" });
+    requests.push(req.body);
+
+    fs.writeFileSync(
+        file,
+        JSON.stringify(requests, null, 2)
+    );
+
+    res.json({
+        message: "Blood Request added successfully!"
+    });
 });
 
+
+// ---------- CONTACT ----------
 app.post("/contact", (req, res) => {
-    const data = fs.readFileSync("data/contacts.json");
+    const file = path.join(__dirname, "data", "contacts.json");
+
+    const data = fs.readFileSync(file, "utf8");
+
     const contacts = JSON.parse(data);
 
     contacts.push(req.body);
 
-    fs.writeFileSync("data/contacts.json", JSON.stringify(contacts, null, 2));
+    fs.writeFileSync(
+    file,
+    JSON.stringify(contacts, null, 2)
+);
 
-    res.json({ message: "Message sent successfully" });
+res.json({
+    message: "Message sent successfully!"
 });
 
-const PORT = process.env.PORT || 3000;
-
-app.listen(PORT, "0.0.0.0", () => {
-    console.log("Server running on port " + PORT);
 });

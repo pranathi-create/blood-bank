@@ -108,18 +108,18 @@ document.getElementById("requestForm").addEventListener("submit", function(event
         urgency: document.querySelectorAll("select")[1].value
     };
 
-    fetch("https://blood-bank-4tw.onrender.com/requests", ...), {
+    fetch("https://blood-bank-4tw.onrender.com/requests", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(request)
-    })
+    }
     .then(response => response.json())
     .then(data => {
         alert(data.message);
         document.getElementById("requestForm").reset();
-    })
+    }))
     .catch(error => {
         alert("Could not connect to the server.");
     });
