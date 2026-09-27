@@ -110,7 +110,7 @@ document.getElementById("donorForm").addEventListener("submit", function(event) 
         lastDonation: document.querySelector('input[type="date"]').value
     };
 
-    fetch("http://localhost:3000/donors", {
+    fetch("https://blood-bank-4tw.onrender.com/donors", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
