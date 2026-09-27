@@ -18,5 +18,15 @@
     "email": "",
     "address": "",
     "lastDonation": ""
+  },
+  {
+    "name": "",
+    "age": "",
+    "gender": "Select Gender",
+    "bloodGroup": "Select Blood Group",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "lastDonation": ""
   }
 ]
