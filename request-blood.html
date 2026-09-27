@@ -108,7 +108,7 @@ document.getElementById("requestForm").addEventListener("submit", function(event
         urgency: document.querySelectorAll("select")[1].value
     };
 
-    fetch("http://localhost:3000/requests", {
+    fetch("https://blood-bank-4tw.onrender.com/requests", ...), {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
