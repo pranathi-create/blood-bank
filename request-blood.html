@@ -30,7 +30,7 @@
         fill in the form below to request blood.
     </p>
 
-    <form>
+    <form id="requestForm">
 
         <label>Patient Name:</label>
         <input type="text" placeholder="Enter patient name">
@@ -92,6 +92,40 @@
     <p>© 2026 Life Savers Blood Bank</p>
     <p>Emergency Contact: 1800-XXX-XXXX</p>
 </footer>
+
+<script>
+document.getElementById("requestForm").addEventListener("submit", function(event) {
+
+    event.preventDefault();
+
+    var request = {
+        patientName: document.querySelector('input[placeholder="Enter patient name"]').value,
+        hospitalName: document.querySelector('input[placeholder="Enter hospital name"]').value,
+        bloodGroup: document.querySelectorAll("select")[0].value,
+        unitsRequired: document.querySelector('input[placeholder="Enter number of units"]').value,
+        contactNumber: document.querySelector('input[placeholder="Enter phone number"]').value,
+        address: document.querySelector("textarea").value,
+        urgency: document.querySelectorAll("select")[1].value
+    };
+
+    fetch("http://localhost:3000/requests", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(request)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        document.getElementById("requestForm").reset();
+    })
+    .catch(error => {
+        alert("Could not connect to the server.");
+    });
+
+});
+</script>
 
 </body>
 </html>

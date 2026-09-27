@@ -28,7 +28,7 @@
         Register as a blood donor by filling out the form below.
     </p>
 
-    <form>
+    <form id="donorForm">
 
         <label>Name:</label>
         <input type="text" placeholder="Enter your name">
@@ -94,6 +94,39 @@
     <p>© 2026 Life Savers Blood Bank</p>
     <p>Emergency Contact: 1800-XXX-XXXX</p>
 </footer>
+<script>
+document.getElementById("donorForm").addEventListener("submit", function(event) {
 
+    event.preventDefault();
+
+    var donor = {
+        name: document.querySelector('input[placeholder="Enter your name"]').value,
+        age: document.querySelector('input[placeholder="Enter your age"]').value,
+        gender: document.querySelector("select").value,
+        bloodGroup: document.querySelectorAll("select")[1].value,
+        phone: document.querySelector('input[placeholder="Enter phone number"]').value,
+        email: document.querySelector('input[placeholder="Enter email"]').value,
+        address: document.querySelector("textarea").value,
+        lastDonation: document.querySelector('input[type="date"]').value
+    };
+
+    fetch("http://localhost:3000/donors", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(donor)
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        document.getElementById("donorForm").reset();
+    })
+    .catch(error => {
+        alert("Could not connect to the server.");
+    });
+
+});
+</script>
 </body>
 </html>

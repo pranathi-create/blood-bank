@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Donate Blood - Life Savers Blood Bank</title>
+    <title>Blood Availability - Life Savers Blood Bank</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -14,86 +14,59 @@
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="donors.html">Donate Blood</a>
+        <a href="blood-donation.html">Blood Donation</a>
         <a href="blood-availability.html">Availability</a>
         <a href="request-blood.html">Request Blood</a>
         <a href="contact.html">Contact</a>
     </nav>
 </header>
 
-<section class="donor">
-    <h2>Donate Blood</h2>
+<section>
 
-    <p>
-        Your blood donation can save someone's life.
-        Register as a blood donor by filling out the form below.
-    </p>
+    <h2>Blood Availability</h2>
 
-    <form>
+    <table border="1" cellpadding="10" style="margin:auto;">
+        <thead>
+            <tr>
+                <th>Blood Group</th>
+                <th>Available Units</th>
+            </tr>
+        </thead>
 
-        <label>Name:</label>
-        <input type="text" placeholder="Enter your name">
+        <tbody id="bloodTable">
+        </tbody>
+    </table>
 
-        <br><br>
-
-        <label>Age:</label>
-        <input type="number" placeholder="Enter your age">
-
-        <br><br>
-
-        <label>Gender:</label>
-        <select>
-            <option>Select Gender</option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
-        </select>
-
-        <br><br>
-
-        <label>Blood Group:</label>
-        <select>
-            <option>Select Blood Group</option>
-            <option>A+</option>
-            <option>A-</option>
-            <option>B+</option>
-            <option>B-</option>
-            <option>AB+</option>
-            <option>AB-</option>
-            <option>O+</option>
-            <option>O-</option>
-        </select>
-
-        <br><br>
-
-        <label>Phone Number:</label>
-        <input type="tel" placeholder="Enter phone number">
-
-        <br><br>
-
-        <label>Email:</label>
-        <input type="email" placeholder="Enter email">
-
-        <br><br>
-
-        <label>Address:</label>
-        <textarea placeholder="Enter your address"></textarea>
-
-        <br><br>
-
-        <label>Last Blood Donation Date:</label>
-        <input type="date">
-
-        <br><br>
-
-        <button type="submit">Register as Donor</button>
-
-    </form>
 </section>
 
 <footer>
     <p>© 2026 Life Savers Blood Bank</p>
     <p>Emergency Contact: 1800-XXX-XXXX</p>
 </footer>
+
+<script>
+fetch("http://localhost:3000/blood")
+.then(response => response.json())
+.then(data => {
+
+    var table = document.getElementById("bloodTable");
+
+    data.forEach(function(blood) {
+
+        table.innerHTML +=
+        "<tr>" +
+        "<td>" + blood.bloodGroup + "</td>" +
+        "<td>" + blood.units + "</td>" +
+        "</tr>";
+
+    });
+
+})
+.catch(error => {
+    document.getElementById("bloodTable").innerHTML =
+    "<tr><td colspan='2'>Could not connect to the server</td></tr>";
+});
+</script>
 
 </body>
 </html>

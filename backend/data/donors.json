@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "name": "B S Pranathi",
+    "age": "16",
+    "gender": "Male",
+    "bloodGroup": "A-",
+    "phone": "666666",
+    "email": "bspranathi77@gmail.com",
+    "address": "6666666",
+    "lastDonation": "6666-06-06"
+  },
+  {
+    "name": "",
+    "age": "",
+    "gender": "Select Gender",
+    "bloodGroup": "Select Blood Group",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "lastDonation": ""
+  }
+]
