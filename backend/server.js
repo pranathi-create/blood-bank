@@ -32,14 +32,16 @@ app.get("/requests", (req, res) => {
   res.json(JSON.parse(data));
 });
 app.post("/requests", (req, res) => {
-    const data = fs.readFileSync("data/requests.json");
-    const requests = JSON.parse(data);
+  const requests = require("./data/requests.json");
 
-    requests.push(req.body);
+  requests.push(req.body);
 
-    fs.writeFileSync("data/requests.json", JSON.stringify(requests, null, 2));
+  fs.writeFileSync(
+    "./data/requests.json",
+    JSON.stringify(requests, null, 2)
+  );
 
-    res.json({ message: "Blood request added successfully" });
+  res.json({ message: "Blood Request added successfully" });
 });
 
 app.post("/contact", (req, res) => {
